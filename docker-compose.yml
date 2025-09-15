@@ -1,0 +1,16 @@
+version: "3.9"
+services:
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    command: ["redis-server", "--save", "", "--appendonly", "no"]
+
+  app:
+    build: .
+    depends_on:
+      - redis
+    env_file:
+      - .env
+    ports:
+      - "8080:8080"
